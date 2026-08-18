@@ -1,0 +1,147 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>TAC Compiler & Optimizer</title>
+
+    <link rel="stylesheet" href="style.css">
+</head>
+
+<body>
+
+    <div class="container">
+
+        <header>
+            <h1>TAC Compiler & Optimizer</h1>
+            <p>
+                Three Address Code Generator and Optimizer
+            </p>
+        </header>
+
+        <section class="input-section">
+
+            <label for="statement">
+                Enter C-style statement
+            </label>
+
+            <textarea
+                id="statement"
+                placeholder="Example: x = (a + b) * (a + b);"
+            ></textarea>
+
+            <button onclick="compileStatement()">
+                Generate TAC
+            </button>
+
+        </section>
+
+        <div id="loading" class="loading">
+            Compiling...
+        </div>
+
+        <div id="error" class="error"></div>
+
+        <section class="results">
+
+            <div class="result-box">
+
+                <h2>Three Address Code</h2>
+
+                <pre id="tac">No result yet.</pre>
+
+            </div>
+
+            <div class="result-box optimized">
+
+                <h2>Optimized Three Address Code</h2>
+
+                <pre id="optimized">No result yet.</pre>
+
+            </div>
+
+        </section>
+
+    </div>
+
+    <script>
+
+        async function compileStatement()
+        {
+            const statement =
+                document.getElementById("statement").value;
+
+            const tac =
+                document.getElementById("tac");
+
+            const optimized =
+                document.getElementById("optimized");
+
+            const error =
+                document.getElementById("error");
+
+            const loading =
+                document.getElementById("loading");
+
+            if (statement.trim() === "")
+            {
+                error.textContent =
+                    "Please enter a statement.";
+
+                return;
+            }
+
+            error.textContent = "";
+
+            loading.style.display = "block";
+
+            tac.textContent = "";
+            optimized.textContent = "";
+
+            try
+            {
+                const response = await fetch("compile.php",
+                {
+                    method: "POST",
+
+                    headers:
+                    {
+                        "Content-Type":
+                            "application/x-www-form-urlencoded"
+                    },
+
+                    body:
+                        "statement=" +
+                        encodeURIComponent(statement)
+                });
+
+                const data = await response.json();
+
+                if (data.success)
+                {
+                    tac.textContent =
+                        data.tac;
+
+                    optimized.textContent =
+                        data.optimized;
+                }
+                else
+                {
+                    error.textContent =
+                        data.error;
+                }
+            }
+            catch (e)
+            {
+                error.textContent =
+                    "Unable to connect to the compiler.";
+            }
+
+            loading.style.display = "none";
+        }
+
+    </script>
+
+</body>
+</html>

@@ -1,0 +1,202 @@
+* {
+    box-sizing: border-box;
+}
+
+body {
+    margin: 0;
+
+    min-height: 100vh;
+
+    font-family: Arial, sans-serif;
+
+    background:
+        linear-gradient(
+            135deg,
+            #0f172a,
+            #111827,
+            #1e1b4b
+        );
+
+    color: white;
+
+    padding: 40px 20px;
+}
+
+.container {
+    max-width: 1100px;
+
+    margin: auto;
+}
+
+header {
+    text-align: center;
+
+    margin-bottom: 40px;
+}
+
+header h1 {
+    margin-bottom: 10px;
+
+    font-size: 38px;
+}
+
+header p {
+    color: #a5b4fc;
+
+    font-size: 17px;
+}
+
+.input-section {
+    background: rgba(255, 255, 255, 0.06);
+
+    border: 1px solid rgba(255, 255, 255, 0.12);
+
+    border-radius: 16px;
+
+    padding: 25px;
+
+    backdrop-filter: blur(10px);
+
+    margin-bottom: 25px;
+}
+
+label {
+    display: block;
+
+    margin-bottom: 12px;
+
+    font-size: 18px;
+
+    font-weight: bold;
+}
+
+textarea {
+    width: 100%;
+
+    height: 120px;
+
+    resize: vertical;
+
+    padding: 15px;
+
+    border-radius: 10px;
+
+    border: 1px solid #475569;
+
+    background: #020617;
+
+    color: #e2e8f0;
+
+    font-family: Consolas, monospace;
+
+    font-size: 16px;
+
+    outline: none;
+}
+
+textarea:focus {
+    border-color: #818cf8;
+}
+
+button {
+    margin-top: 15px;
+
+    width: 100%;
+
+    padding: 14px;
+
+    border: none;
+
+    border-radius: 10px;
+
+    background: #6366f1;
+
+    color: white;
+
+    font-size: 17px;
+
+    font-weight: bold;
+
+    cursor: pointer;
+}
+
+button:hover {
+    background: #4f46e5;
+}
+
+.loading {
+    display: none;
+
+    text-align: center;
+
+    color: #a5b4fc;
+
+    margin: 20px;
+}
+
+.error {
+    color: #fca5a5;
+
+    text-align: center;
+
+    margin: 15px;
+}
+
+.results {
+    display: grid;
+
+    grid-template-columns: 1fr 1fr;
+
+    gap: 20px;
+}
+
+.result-box {
+    background: rgba(255, 255, 255, 0.06);
+
+    border: 1px solid rgba(255, 255, 255, 0.12);
+
+    border-radius: 16px;
+
+    padding: 20px;
+
+    min-height: 300px;
+}
+
+.result-box h2 {
+    margin-top: 0;
+
+    font-size: 20px;
+}
+
+pre {
+    background: #020617;
+
+    padding: 20px;
+
+    border-radius: 10px;
+
+    min-height: 220px;
+
+    overflow-x: auto;
+
+    color: #cbd5e1;
+
+    font-family: Consolas, monospace;
+
+    line-height: 1.7;
+}
+
+.optimized h2 {
+    color: #a5b4fc;
+}
+
+@media (max-width: 800px) {
+
+    .results {
+        grid-template-columns: 1fr;
+    }
+
+    header h1 {
+        font-size: 30px;
+    }
+}
