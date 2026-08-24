@@ -4,66 +4,179 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-    <title>TAC Compiler & Optimizer</title>
+    <title>TAC // Compiler</title>
+
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;500;600;700;800&family=Press+Start+2P&display=swap" rel="stylesheet">
 
     <link rel="stylesheet" href="style.css">
 </head>
 
 <body>
 
-    <div class="container">
+    <div class="scanlines"></div>
 
-        <header>
-            <h1>TAC Compiler & Optimizer</h1>
-            <p>
-                Three Address Code Generator and Optimizer
+    <main class="container">
+
+        <header class="hero">
+
+            <div class="terminal-tag">
+                <span class="blink">█</span> COMPILER_SYSTEM // ONLINE
+            </div>
+
+            <h1>
+                TAC<span>_</span>COMPILER
+            </h1>
+
+            <p class="subtitle">
+                THREE ADDRESS CODE GENERATOR <span>//</span> OPTIMIZER
             </p>
+
+            <div class="header-line">
+                <span></span>
+                <b>[ C / FLEX / BISON ]</b>
+                <span></span>
+            </div>
+
         </header>
 
-        <section class="input-section">
 
-            <label for="statement">
-                Enter C-style statement
-            </label>
+        <section class="compiler-panel">
 
-            <textarea
-                id="statement"
-                placeholder="Example: x = (a + b) * (a + b);"
-            ></textarea>
+            <div class="panel-header">
+                <div>
+                    <span class="panel-index">01</span>
+                    INPUT
+                </div>
 
-            <button onclick="compileStatement()">
-                Generate TAC
-            </button>
+                <span class="status">
+                    ● READY
+                </span>
+            </div>
+
+
+            <div class="input-content">
+
+                <label for="statement">
+                    ENTER C-STYLE STATEMENT
+                </label>
+
+                <div class="editor">
+
+                    <div class="line-number">01</div>
+
+                    <textarea
+                        id="statement"
+                        spellcheck="false"
+                        placeholder="x = (a + b) * (a + b);"
+                    ></textarea>
+
+                </div>
+
+                <div class="hint">
+                    <span>TIP</span>
+                    One assignment at a time • semicolon optional
+                </div>
+
+                <button onclick="compileStatement()" id="compileButton">
+
+                    <span class="button-icon">▶</span>
+
+                    GENERATE TAC
+
+                    <span class="button-arrow">→</span>
+
+                </button>
+
+            </div>
 
         </section>
 
+
         <div id="loading" class="loading">
-            Compiling...
+
+            <span class="loader"></span>
+
+            <span>
+                COMPILING<span class="dots">...</span>
+            </span>
+
         </div>
 
+
         <div id="error" class="error"></div>
+
 
         <section class="results">
 
             <div class="result-box">
 
-                <h2>Three Address Code</h2>
+                <div class="result-header">
 
-                <pre id="tac">No result yet.</pre>
+                    <div>
+                        <span class="result-number">02</span>
+                        THREE ADDRESS CODE
+                    </div>
+
+                    <span class="tag">RAW_TAC</span>
+
+                </div>
+
+                <pre id="tac"><span class="placeholder">NO OUTPUT YET</span>
+
+Enter a statement above
+and press GENERATE TAC.</pre>
 
             </div>
 
+
             <div class="result-box optimized">
 
-                <h2>Optimized Three Address Code</h2>
+                <div class="result-header">
 
-                <pre id="optimized">No result yet.</pre>
+                    <div>
+                        <span class="result-number">03</span>
+                        OPTIMIZED TAC
+                    </div>
+
+                    <span class="tag optimized-tag">OPTIMIZED</span>
+
+                </div>
+
+                <pre id="optimized"><span class="placeholder">NO OUTPUT YET</span>
+
+Optimized Three Address Code
+will appear here.</pre>
 
             </div>
 
         </section>
 
-    </div>
+
+        <footer>
+
+            <div>
+                <span class="footer-symbol">&gt;_</span>
+                TAC COMPILER
+            </div>
+
+            <div>
+                FLEX + BISON
+                <span class="footer-dot">◆</span>
+                C
+                <span class="footer-dot">◆</span>
+                PHP
+            </div>
+
+            <div>
+                v1.0
+            </div>
+
+        </footer>
+
+    </main>
+
 
     <script>
 
@@ -84,20 +197,28 @@
             const loading =
                 document.getElementById("loading");
 
+            const button =
+                document.getElementById("compileButton");
+
+
             if (statement.trim() === "")
             {
                 error.textContent =
-                    "Please enter a statement.";
+                    "ERROR // Please enter a statement.";
 
                 return;
             }
 
+
             error.textContent = "";
 
-            loading.style.display = "block";
+            loading.style.display = "flex";
+
+            button.disabled = true;
 
             tac.textContent = "";
             optimized.textContent = "";
+
 
             try
             {
@@ -116,7 +237,9 @@
                         encodeURIComponent(statement)
                 });
 
+
                 const data = await response.json();
+
 
                 if (data.success)
                 {
@@ -129,17 +252,32 @@
                 else
                 {
                     error.textContent =
-                        data.error;
+                        "ERROR // " + data.error;
                 }
+
             }
             catch (e)
             {
                 error.textContent =
-                    "Unable to connect to the compiler.";
+                    "ERROR // Unable to connect to the compiler.";
             }
 
+
             loading.style.display = "none";
+
+            button.disabled = false;
         }
+
+
+        document
+            .getElementById("statement")
+            .addEventListener("keydown", function(event)
+            {
+                if (event.ctrlKey && event.key === "Enter")
+                {
+                    compileStatement();
+                }
+            });
 
     </script>
 
